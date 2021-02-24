@@ -1,46 +1,35 @@
 #include "Droideka_Controller.h"
 
-Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data])
+Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], int ipNb)
 {
     Serial.begin(9600);
-    this->controllerSerialRx = rx;
-    this->controllerSerialTx = tx;
-    this->controllerSerial = new SoftwareSerial(this->controllerSerialRx), this->controllerSerialTx);
-    this->controllerSerial.begin(9600);
+    controllerSerialRx = rx;
+    controllerSerialTx = tx;
+    controllerSerial = new SoftwareSerial(controllerSerialRx, controllerSerialTx);
+    controllerSerial->begin(9600);
 
-    this->interval = inter;
-    for (int ii = 0; ii < digNb; ii++)
+    interval = inter;
+    analogNb = anaNb;
+    digitalNb = digNb;
+    inputPullupNb = ipNb;
+    for (int ii = 0; ii < digitalNb; ii++)
     {
-        this->digitalPins[ii] = digPins[ii];
+        digitalPin[ii] = digPin[ii];
     }
 
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    for (int ii = 0; ii < 1; ii++)
+    for (int ii = 0; ii < digitalNb - inputPullupNb; ii++)
     {
-        pinMode(this->digitalPins[ii], INPUT_PULLUP);
+        pinMode(digitalPin[ii], INPUT);
     }
-    for (int ii = 0; ii < 1; ii++)
+    for (int ii = digitalNb - inputPullupNb; ii < digitalNb; ii++)
     {
-        pinMode(this->digitalPins[ii], INPUT);
+        pinMode(digitalPin[ii], INPUT_PULLUP);
     }
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
 
     for (int ii = 0; ii < anaNb; ii++)
     {
-        this->analogPins[ii] = anaPins[ii];
-        pinMode(this->analogPins[ii], INPUT);
+        this->analogPin[ii] = anaPin[ii];
+        pinMode(this->analogPin[ii], INPUT);
     }
 
     // Start the library, pass in the data details and the name of the serial port. Can be Serial, Serial1, Serial2, etc.
@@ -69,39 +58,25 @@ bool Droideka_Controller::sendData(unsigned long inter)
 
 bool Droideka_Controller::state()
 {
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
     int btPin = 0;
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    /***************    A compléter     ****************/
-    this->state = digitalRead(digitalPins[btPin]);
-    return this->state;
+    this->btState = digitalRead(digitalPin[btPin]);
+    return this->btState;
 }
 
 void Droideka_Controller::getDataFromSensors()
 {
     for (int ii = 0; ii < this->analogNb; ii++)
     {
-        analog[ii] = analogRead(analogPins[ii]);
+        analog[ii] = analogRead(analogPin[ii]);
     }
     for (int ii = 0; ii < this->digitalNb; ii++)
     {
-        digital[ii] = analogRead(digitalPins[ii]);
+        digital[ii] = analogRead(digitalPin[ii]);
     }
 
     for (int ii = 0; ii < this->nb_max_data; ii++)
     {
-        this.txdata.analog[ii] = this.analog[ii];
-        this.txdata.digital[ii] = this.digital[ii];
+        this->txdata.analog[ii] = this->analog[ii];
+        this->txdata.digital[ii] = this->digital[ii];
     }
 }

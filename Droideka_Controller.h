@@ -4,14 +4,14 @@
 #include <SoftwareSerial.h>
 #include <SoftEasyTransfer.h>
 
-const int nb_max_data = 50;
+#define NB_MAX_DATA 20
 
 struct SEND_DATA_STRUCTURE
 {
     // put your variable definitions here for the data you want to receive
     // THIS MUST BE EXACTLY THE SAME ON THE OTHER ARDUINO
-    int analog[nb_max_data];
-    int digital[nb_max_data];
+    int analog[NB_MAX_DATA];
+    int digital[NB_MAX_DATA];
 };
 
 struct RECEIVE_DATA_STRUCTURE
@@ -31,8 +31,7 @@ public:
     int controllerSerialRx;
     int controllerSerialTx;
     SoftwareSerial *controllerSerial; // RX, TX
-    int bluetoothStatePin;
-    bool state = false;
+    bool btState = false;
     // The HM-10 state pin is at level high when connected, but there are 2 possible behaviour when not connected:
     // 1- state pin oscillates between high and low (500 ms between a change)
     // 2- state pin is low
@@ -45,15 +44,17 @@ public:
     RECEIVE_DATA_STRUCTURE rxdata;
     SEND_DATA_STRUCTURE txdata;
 
-    int nb_max_data = nb_max_data;
+    int nb_max_data = NB_MAX_DATA;
     int analogNb;
-    int analogPin[nb_max_data];
-    int analog[nb_max_data];
+    int analogPin[NB_MAX_DATA];
+    int analog[NB_MAX_DATA];
     int digitalNb;
-    int digitalPin[nb_max_data];
-    int digital[nb_max_data];
+    int digitalPin[NB_MAX_DATA];
+    int digital[NB_MAX_DATA];
+    // The pin 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
+    int inputPullupNb;
 
-    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data]);
+    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], int ipNb);
     bool state(); // Check if bluetooth is connected
     void getDataFromSensors();
     bool sendData(unsigned long inter);
