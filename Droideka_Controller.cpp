@@ -1,6 +1,6 @@
-#include "Controller.h"
+#include "Droideka_Controller.h"
 
-Controller::Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data])
+Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data])
 {
     Serial.begin(9600);
     this->controllerSerialRx = rx;
@@ -49,12 +49,12 @@ Controller::Controller(int rx, int tx, long inter, int digNb, int anaNb, int dig
 }
 
 // 2 overloads of function in order to make this->interval a default argument of sendData. See the following for detail : https://stackoverflow.com/questions/9286533/how-to-use-a-member-variable-as-a-default-argument-in-c
-bool Controller::sendData()
+bool Droideka_Controller::sendData()
 {
     this->sendData(this->interval);
 }
 
-bool Controller::sendData(unsigned long inter)
+bool Droideka_Controller::sendData(unsigned long inter)
 {
     unsigned long currentMillis = millis();
     if (currentMillis - this->lastMillis >= inter)
@@ -67,7 +67,7 @@ bool Controller::sendData(unsigned long inter)
     return false;
 }
 
-bool Controller::state()
+bool Droideka_Controller::state()
 {
     /***************    A compléter     ****************/
     /***************    A compléter     ****************/
@@ -88,7 +88,7 @@ bool Controller::state()
     return this->state;
 }
 
-void Controller::getDataFromSensors()
+void Droideka_Controller::getDataFromSensors()
 {
     for (int ii = 0; ii < this->analogNb; ii++)
     {

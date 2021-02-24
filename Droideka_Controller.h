@@ -53,7 +53,7 @@ public:
     int digitalPin[nb_max_data];
     int digital[nb_max_data];
 
-    Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data]);
+    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[nb_max_data], int anaPins[nb_max_data]);
     bool state(); // Check if bluetooth is connected
     void getDataFromSensors();
     bool sendData(unsigned long inter);
