@@ -51,7 +51,7 @@ public:
     int digitalNb;
     int digitalPin[NB_MAX_DATA];
     int digital[NB_MAX_DATA];
-    // The pin 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
+    // The digital pin 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
     int inputPullupNb;
 
     Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], int ipNb);

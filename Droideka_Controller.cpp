@@ -71,7 +71,7 @@ void Droideka_Controller::getDataFromSensors()
     }
     for (int ii = 0; ii < this->digitalNb; ii++)
     {
-        digital[ii] = analogRead(digitalPin[ii]);
+        digital[ii] = digitalRead(digitalPin[ii]);
     }
 
     for (int ii = 0; ii < this->nb_max_data; ii++)
