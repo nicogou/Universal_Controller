@@ -1,4 +1,6 @@
 {
-    "board": "arduino:avr:uno",
-    "sketch": "examples\\SimpleExample\\SimpleExample.ino"
+    "board": "arduino:avr:nano",
+    "sketch": "examples\\SimpleExample\\SimpleExample.ino",
+    "port": "COM7",
+    "configuration": "cpu=atmega328"
 }

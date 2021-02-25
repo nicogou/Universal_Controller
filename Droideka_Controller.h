@@ -25,8 +25,8 @@ struct RECEIVE_DATA_STRUCTURE
 class Droideka_Controller
 {
 public:
-    unsigned long lastMillis;
-    unsigned long interval = 400;
+    unsigned long lastMillis = 0;
+    unsigned long interval;
 
     int controllerSerialRx;
     int controllerSerialTx;

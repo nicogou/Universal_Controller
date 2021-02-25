@@ -5,7 +5,7 @@
 #define DNB 4
 #define IPNB 3
 #define ANB 3
-#define INTER 400
+#define INTER 100
 
 Droideka_Controller *con;
 int anaPin[NB_MAX_DATA];
@@ -40,18 +40,13 @@ void loop()
     {
         con->getDataFromSensors();
 
-        if (con->sendData())
+        if (con->sendData(con->interval))
         {
-            print_("Data sent");
-        }
-        else
-        {
-            print_("Cannot send data");
+            print_("Data sent at:\t" + String(millis()), true);
         }
     }
     else
     {
-        print_("Not connected");
+        print_("Not connected", true);
     }
-    print_("", true);
 }
