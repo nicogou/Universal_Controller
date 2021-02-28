@@ -1,54 +1,75 @@
 #include "Droideka_Controller.h"
 
-Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], int ipNb)
+Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware)
 {
+    btHardwareConfig = btHardware;
+
     Serial.begin(9600);
     controllerSerialRx = rx;
     controllerSerialTx = tx;
     controllerSerial = new SoftwareSerial(controllerSerialRx, controllerSerialTx);
-    controllerSerial->begin(9600);
+    int baudRate;
+    if (btHardwareConfig == BT_HW_HM10)
+    {
+        baudRate = 9600;
+    }
+    else if (btHardwareConfig == BT_HW_HC05)
+    {
+        baudRate = 38400;
+    }
+    controllerSerial->begin(baudRate);
 
     interval = inter;
     analogNb = anaNb;
     digitalNb = digNb;
-    inputPullupNb = ipNb;
+    txdata.analogNb = analogNb;
+    txdata.digitalNb = digitalNb;
+    for (int ii = 0; ii < digitalNb; ii++)
+    {
+        digitalInputPullup[ii] = digInputPullup[ii];
+        digitalReversedLogic[ii] = digReversedLogic[ii];
+    }
+
     for (int ii = 0; ii < digitalNb; ii++)
     {
         digitalPin[ii] = digPin[ii];
     }
 
-    for (int ii = 0; ii < digitalNb - inputPullupNb; ii++)
+    for (int ii = 0; ii < digitalNb; ii++)
     {
-        pinMode(digitalPin[ii], INPUT);
-    }
-    for (int ii = digitalNb - inputPullupNb; ii < digitalNb; ii++)
-    {
-        pinMode(digitalPin[ii], INPUT_PULLUP);
+        if (digitalInputPullup[ii])
+        {
+            pinMode(digitalPin[ii], INPUT_PULLUP);
+        }
+        else
+        {
+            pinMode(digitalPin[ii], INPUT);
+        }
     }
 
     for (int ii = 0; ii < anaNb; ii++)
     {
-        this->analogPin[ii] = anaPin[ii];
-        pinMode(this->analogPin[ii], INPUT);
+        analogPin[ii] = anaPin[ii];
+        pinMode(analogPin[ii], INPUT);
     }
 
     // Start the library, pass in the data details and the name of the serial port. Can be Serial, Serial1, Serial2, etc.
-    this->ETin.begin(details(this->rxdata), this->controllerSerial);
-    this->ETout.begin(details(this->txdata), this->controllerSerial);
+    ETin.begin(details(rxdata), controllerSerial);
+    ETout.begin(details(txdata), controllerSerial);
 }
 
 // 2 overloads of function in order to make this->interval a default argument of sendData. See the following for detail : https://stackoverflow.com/questions/9286533/how-to-use-a-member-variable-as-a-default-argument-in-c
 bool Droideka_Controller::sendData()
 {
-    this->sendData(this->interval);
+    sendData(interval);
 }
 
 bool Droideka_Controller::sendData(unsigned long inter)
 {
     unsigned long currentMillis = millis();
-    if (currentMillis - this->lastMillis >= inter)
+    if (currentMillis - lastMillis >= inter)
     {
-        this->lastMillis = currentMillis;
+        lastMillis = currentMillis;
         // Send data to receiver.
         ETout.sendData();
         return true;
@@ -58,25 +79,34 @@ bool Droideka_Controller::sendData(unsigned long inter)
 
 bool Droideka_Controller::state()
 {
-    int btPin = 0;
-    this->btState = digitalRead(digitalPin[btPin]);
-    return this->btState;
+    if (btHardwareConfig == BT_HW_HM10)
+    {
+        int btPin = 0;
+        btState = digitalRead(digitalPin[btPin]);
+        return btState;
+    }
+    else if (btHardwareConfig == BT_HW_HC05)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void Droideka_Controller::getDataFromSensors()
 {
-    for (int ii = 0; ii < this->analogNb; ii++)
+    for (int ii = 0; ii < analogNb; ii++)
     {
-        analog[ii] = analogRead(analogPin[ii]);
+        txdata.analog[ii] = analogRead(analogPin[ii]);
     }
-    for (int ii = 0; ii < this->digitalNb; ii++)
+    for (int ii = 0; ii < digitalNb; ii++)
     {
-        digital[ii] = digitalRead(digitalPin[ii]);
-    }
-
-    for (int ii = 0; ii < this->nb_max_data; ii++)
-    {
-        this->txdata.analog[ii] = this->analog[ii];
-        this->txdata.digital[ii] = this->digital[ii];
+        txdata.digital[ii] = digitalRead(digitalPin[ii]);
+        if (digitalReversedLogic[ii])
+        {
+            txdata.digital[ii] = 1 - txdata.digital[ii];
+        }
     }
 }

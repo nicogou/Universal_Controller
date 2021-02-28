@@ -1,6 +1,7 @@
 {
     "board": "arduino:avr:nano",
-    "sketch": "examples\\SimpleExample\\SimpleExample.ino",
+    "sketch": "examples\\DroidekaExample\\DroidekaExample.ino",
     "port": "COM7",
-    "configuration": "cpu=atmega328"
+    "configuration": "cpu=atmega328",
+    "programmer": "AVRISP mkII"
 }
