@@ -3,13 +3,14 @@
 #define RX 7
 #define TX 6
 #define DNB 4
-#define IPNB 3
 #define ANB 3
 #define INTER 100
 
 Droideka_Controller *con;
 int anaPin[NB_MAX_DATA];
 int digPin[NB_MAX_DATA];
+bool digInputPullup[NB_MAX_DATA];
+bool digReversedLogic[NB_MAX_DATA];
 
 void print_(String string, bool newline = false)
 {
@@ -30,8 +31,16 @@ void setup()
     digPin[1] = 2;
     digPin[2] = 3;
     digPin[3] = 4;
+    digInputPullup[0] = false;
+    digInputPullup[1] = true;
+    digInputPullup[2] = true;
+    digInputPullup[3] = true;
+    digReversedLogic[0] = false;
+    digReversedLogic[1] = false;
+    digReversedLogic[2] = false;
+    digReversedLogic[3] = false;
 
-    con = new Droideka_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, IPNB);
+    con = new Droideka_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, digInputPullup, digReversedLogic, BT_HW_HM10);
 }
 
 void loop()

@@ -5,11 +5,15 @@
 #include <SoftEasyTransfer.h>
 
 #define NB_MAX_DATA 20
+#define BT_HW_HM10 "HM-10"
+#define BT_HW_HC05 "HC-05"
 
 struct SEND_DATA_STRUCTURE
 {
     // put your variable definitions here for the data you want to receive
     // THIS MUST BE EXACTLY THE SAME ON THE OTHER ARDUINO
+    int analogNb;
+    int digitalNb;
     int analog[NB_MAX_DATA];
     int digital[NB_MAX_DATA];
 };
@@ -37,6 +41,7 @@ public:
     // 2- state pin is low
     // This behaviour can be changed via AT commands : send AT+PIO10 for behaviour 1, and AT+PIO11 for behaviour 2.
     // We will be in behaviour 2 for the purpose of this project.
+    String btHardwareConfig; // 2 hardware configs possible for now : HM-10 or HC-05.
 
     // create two EasyTransfer objects.
     SoftEasyTransfer ETin, ETout;
@@ -47,14 +52,13 @@ public:
     int nb_max_data = NB_MAX_DATA;
     int analogNb;
     int analogPin[NB_MAX_DATA];
-    int analog[NB_MAX_DATA];
     int digitalNb;
     int digitalPin[NB_MAX_DATA];
-    int digital[NB_MAX_DATA];
-    // The digital pin 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
-    int inputPullupNb;
+    bool digitalInputPullup[NB_MAX_DATA];
+    bool digitalReversedLogic[NB_MAX_DATA];
+    // The digital pin at index 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
 
-    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], int ipNb);
+    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware);
     bool state(); // Check if bluetooth is connected
     void getDataFromSensors();
     bool sendData(unsigned long inter);
