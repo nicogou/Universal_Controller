@@ -1,6 +1,6 @@
-#include "Droideka_Controller.h"
+#include "Universal_Controller.h"
 
-Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware)
+Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware)
 {
     btHardwareConfig = btHardware;
 
@@ -59,12 +59,12 @@ Droideka_Controller::Droideka_Controller(int rx, int tx, long inter, int digNb, 
 }
 
 // 2 overloads of function in order to make this->interval a default argument of sendData. See the following for detail : https://stackoverflow.com/questions/9286533/how-to-use-a-member-variable-as-a-default-argument-in-c
-bool Droideka_Controller::sendData()
+bool Universal_Controller::sendData()
 {
     sendData(interval);
 }
 
-bool Droideka_Controller::sendData(unsigned long inter)
+bool Universal_Controller::sendData(unsigned long inter)
 {
     unsigned long currentMillis = millis();
     if (currentMillis - lastMillis >= inter)
@@ -77,7 +77,7 @@ bool Droideka_Controller::sendData(unsigned long inter)
     return false;
 }
 
-bool Droideka_Controller::state()
+bool Universal_Controller::state()
 {
     if (btHardwareConfig == BT_HW_HM10)
     {
@@ -95,7 +95,7 @@ bool Droideka_Controller::state()
     }
 }
 
-void Droideka_Controller::getDataFromSensors()
+void Universal_Controller::getDataFromSensors()
 {
     for (int ii = 0; ii < analogNb; ii++)
     {

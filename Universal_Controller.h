@@ -1,5 +1,5 @@
-#ifndef Droideka_Controller_h
-#define Droideka_Controller_h
+#ifndef Universal_Controller_h
+#define Universal_Controller_h
 
 #include <SoftwareSerial.h>
 #include <SoftEasyTransfer.h>
@@ -26,7 +26,7 @@ struct RECEIVE_DATA_STRUCTURE
     // Nothing to be sent back to Controller yet.
 };
 
-class Droideka_Controller
+class Universal_Controller
 {
 public:
     unsigned long lastMillis = 0;
@@ -58,7 +58,7 @@ public:
     bool digitalReversedLogic[NB_MAX_DATA];
     // The digital pin at index 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
 
-    Droideka_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware);
+    Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware);
     bool state(); // Check if bluetooth is connected
     void getDataFromSensors();
     bool sendData(unsigned long inter);

@@ -6,7 +6,7 @@
 #define ANB 3
 #define INTER 100
 
-Droideka_Controller *con;
+Universal_Controller *con;
 int anaPin[NB_MAX_DATA];
 int digPin[NB_MAX_DATA];
 bool digInputPullup[NB_MAX_DATA];
@@ -40,7 +40,7 @@ void setup()
     digReversedLogic[2] = false;
     digReversedLogic[3] = false;
 
-    con = new Droideka_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, digInputPullup, digReversedLogic, BT_HW_HM10);
+    con = new Universal_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, digInputPullup, digReversedLogic, BT_HW_HM10);
 }
 
 void loop()
