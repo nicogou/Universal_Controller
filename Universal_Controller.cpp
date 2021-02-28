@@ -29,10 +29,7 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
         digitalInputPullup[ii] = digInputPullup[ii];
         digitalReversedLogic[ii] = digReversedLogic[ii];
         digitalPin[ii] = digPin[ii];
-    }
 
-    for (int ii = 0; ii < digitalNb; ii++)
-    {
         if (digitalInputPullup[ii])
         {
             pinMode(digitalPin[ii], INPUT_PULLUP);
