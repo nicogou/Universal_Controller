@@ -54,11 +54,11 @@ void loop()
             print_("Data sent at:\t" + String(millis()), true);
             for (int ii = 0; ii < con->analogNb; ii++)
             {
-                print_(String(con->analog[ii]));
+                print_(String(con->txdata.analog[ii]));
             }
             for (int ii = 0; ii < con->digitalNb; ii++)
             {
-                print_(String(con->digital[ii]));
+                print_(String(con->txdata.digital[ii]));
             }
             print_("", true);
         }
