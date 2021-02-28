@@ -28,10 +28,6 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
     {
         digitalInputPullup[ii] = digInputPullup[ii];
         digitalReversedLogic[ii] = digReversedLogic[ii];
-    }
-
-    for (int ii = 0; ii < digitalNb; ii++)
-    {
         digitalPin[ii] = digPin[ii];
     }
 
