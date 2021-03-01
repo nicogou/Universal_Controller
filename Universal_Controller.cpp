@@ -8,7 +8,7 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
     controllerSerialRx = rx;
     controllerSerialTx = tx;
     controllerSerial = new SoftwareSerial(controllerSerialRx, controllerSerialTx);
-    int baudRate;
+    long baudRate;
     if (btHardwareConfig == BT_HW_HM10)
     {
         baudRate = 9600;
