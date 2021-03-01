@@ -12,10 +12,10 @@ struct SEND_DATA_STRUCTURE
 {
     // put your variable definitions here for the data you want to receive
     // THIS MUST BE EXACTLY THE SAME ON THE OTHER ARDUINO
-    int analogNb;
-    int digitalNb;
-    int analog[NB_MAX_DATA];
-    int digital[NB_MAX_DATA];
+    int16_t analogNb;
+    int16_t digitalNb;
+    int16_t analog[NB_MAX_DATA];
+    int16_t digital[NB_MAX_DATA];
 };
 
 struct RECEIVE_DATA_STRUCTURE

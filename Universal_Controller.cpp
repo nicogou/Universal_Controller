@@ -92,11 +92,11 @@ void Universal_Controller::getDataFromSensors()
 {
     for (int ii = 0; ii < analogNb; ii++)
     {
-        txdata.analog[ii] = analogRead(analogPin[ii]);
+        txdata.analog[ii] = int16_t(analogRead(analogPin[ii]));
     }
     for (int ii = 0; ii < digitalNb; ii++)
     {
-        txdata.digital[ii] = digitalRead(digitalPin[ii]);
+        txdata.digital[ii] = int16_t(digitalRead(digitalPin[ii]));
         if (digitalReversedLogic[ii])
         {
             txdata.digital[ii] = 1 - txdata.digital[ii];
