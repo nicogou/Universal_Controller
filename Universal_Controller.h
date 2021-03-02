@@ -16,6 +16,7 @@ struct SEND_DATA_STRUCTURE
     int16_t digitalNb;
     int16_t analog[NB_MAX_DATA];
     int16_t digital[NB_MAX_DATA];
+    int16_t analogThreshold[NB_MAX_DATA];
 };
 
 struct RECEIVE_DATA_STRUCTURE
@@ -56,9 +57,10 @@ public:
     int digitalPin[NB_MAX_DATA];
     bool digitalInputPullup[NB_MAX_DATA];
     bool digitalReversedLogic[NB_MAX_DATA];
+    int16_t threshold[NB_MAX_DATA];
     // The digital pin at index 0 is always the pin used to check the state of bluetooth. The next digital pins are used for other things.
 
-    Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware);
+    Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPins[NB_MAX_DATA], int anaPins[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], int16_t thresh[NB_MAX_DATA], String btHardware);
     bool state(); // Check if bluetooth is connected
     void getDataFromSensors();
     bool sendData(unsigned long inter);
