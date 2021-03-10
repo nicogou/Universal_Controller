@@ -1,6 +1,6 @@
 #include "Universal_Controller.h"
 
-Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], String btHardware)
+Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb, int anaNb, int digPin[NB_MAX_DATA], int anaPin[NB_MAX_DATA], bool digInputPullup[NB_MAX_DATA], bool digReversedLogic[NB_MAX_DATA], int16_t thresh[NB_MAX_DATA], String btHardware)
 {
     btHardwareConfig = btHardware;
 
@@ -40,10 +40,15 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
         }
     }
 
+    for (int ii = 0; ii < NB_MAX_DATA; ii++)
+    {
+        txdata.analogThreshold[ii] = 0;
+    }
     for (int ii = 0; ii < anaNb; ii++)
     {
         analogPin[ii] = anaPin[ii];
         pinMode(analogPin[ii], INPUT);
+        txdata.analogThreshold[ii] = thresh[ii];
     }
 
     // Start the library, pass in the data details and the name of the serial port. Can be Serial, Serial1, Serial2, etc.

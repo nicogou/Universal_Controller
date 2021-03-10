@@ -11,6 +11,7 @@ int anaPin[NB_MAX_DATA];
 int digPin[NB_MAX_DATA];
 bool digInputPullup[NB_MAX_DATA];
 bool digReversedLogic[NB_MAX_DATA];
+int16_t threshold[NB_MAX_DATA];
 
 void print_(String string, bool newline = false)
 {
@@ -28,6 +29,11 @@ void setup()
     anaPin[1] = A5;
     anaPin[2] = A7;
     anaPin[3] = A6;
+
+    threshold[0] = 4;
+    threshold[1] = 4;
+    threshold[2] = 4;
+    threshold[3] = 4;
 
     digPin[0] = 10;
     digPin[1] = 8;
@@ -74,7 +80,7 @@ void setup()
     digReversedLogic[12] = false;
     digReversedLogic[13] = false;
 
-    con = new Universal_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, digInputPullup, digReversedLogic, BT_HW_HC05);
+    con = new Universal_Controller(RX, TX, INTER, DNB, ANB, digPin, anaPin, digInputPullup, digReversedLogic, threshold, BT_HW_HC05);
 }
 
 void loop()
