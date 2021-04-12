@@ -17,6 +17,10 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
     {
         baudRate = 38400;
     }
+    else
+    {
+        baudRate = 9600;
+    }
     controllerSerial->begin(baudRate);
 
     interval = inter;
@@ -61,7 +65,7 @@ Universal_Controller::Universal_Controller(int rx, int tx, long inter, int digNb
 // 2 overloads of function in order to make this->interval a default argument of sendData. See the following for detail : https://stackoverflow.com/questions/9286533/how-to-use-a-member-variable-as-a-default-argument-in-c
 bool Universal_Controller::sendData()
 {
-    sendData(interval);
+    return sendData(interval);
 }
 
 bool Universal_Controller::sendData(unsigned long inter)
