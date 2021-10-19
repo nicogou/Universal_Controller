@@ -4,7 +4,7 @@
 #define TX 3
 #define DNB 14
 #define ANB 4
-#define INTER 100
+#define INTER 40
 
 Universal_Controller *con;
 int anaPin[NB_MAX_DATA];
